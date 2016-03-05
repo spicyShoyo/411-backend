@@ -5,7 +5,7 @@
   "main": "dist/src/index.js",
   "scripts": {
     "start": "node_modules/gulp/bin/gulp.js; node dist/src/index.js",
-    "test": "node_modules/gulp/bin/gulp.js; node_modules/mocha/bin/mocha --require dist/test/Commons.js --recursive dist/test"
+    "test": "node_modules/gulp/bin/gulp.js; node_modules/mocha/bin/mocha --require dist/test/commons.js --recursive dist/test"
   },
   "repository": {
     "type": "git",
