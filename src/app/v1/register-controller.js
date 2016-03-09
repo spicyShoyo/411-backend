@@ -38,7 +38,7 @@ export default class LoginController extends Controller {
     let connection;
     db.then(conn => {
         connection = conn;
-        return conn.query(`SELECT * FROM user WHERE username = '${username}' AND password = '${password}';`);
+        return conn.query(`SELECT * FROM user WHERE username = '${username}';`);
       })
       .then(rows => {
         if (rows.length !== 0) return next(new Errors.ForbiddenError());
