@@ -8,6 +8,7 @@ const UseMiddleware = require('./../use-middleware');
 const requireParams = require('./../middleware/require-params');
 const db = require('./../database');
 const Errors = require('restify-errors');
+const uuid = require('node-uuid');
 
 export default class LoginController extends Controller {
 
@@ -20,7 +21,7 @@ export default class LoginController extends Controller {
    *
    * @apiParam username Username.
    * @apiParam password Password.
-   * 
+   *
    * @apiSuccess {String} token Access token.
    *
    */
@@ -34,10 +35,20 @@ export default class LoginController extends Controller {
   login(req, res, next) {
     let username = req.body.username;
     let password = req.body.password;
-    db.then(conn => conn.query(`SELECT * FROM user WHERE username = '${username}' AND password = '${password}';`))
+    let connection;
+    db.then(conn => {
+        connection = conn;
+        return conn.query(`SELECT * FROM user WHERE username = '${username}' AND password = '${password}';`);
+      })
       .then(rows => {
         if (rows.length === 0) return next(new Errors.ForbiddenError());
-        res.send({ token: rows[0].token });
+      })
+      .then(() => {
+        let newToken = uuid.v4();
+        return [connection.query(`UPDATE user SET token = '${newToken}' WHERE username = '${username}';`), newToken];
+      })
+      .then(([result, newToken]) => {
+        res.send({ token: newToken });
         return next();
       });
   }
