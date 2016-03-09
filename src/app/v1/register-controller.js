@@ -15,9 +15,9 @@ export default class LoginController extends Controller {
   get prefix() { return 'register'; }
 
   /**
-   * @api {post} /v1/login Login
-   * @apiName Login
-   * @apiGroup Login
+   * @api {post} /v1/register Register
+   * @apiName Register
+   * @apiGroup Register
    *
    * @apiParam username Username.
    * @apiParam password Password.
