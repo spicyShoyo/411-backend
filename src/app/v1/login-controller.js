@@ -49,8 +49,6 @@ export default class LoginController extends Controller {
       })
       .then(([result, newToken]) => {
         res.send({ token: newToken });
-        return next();
       });
   }
 }
-
