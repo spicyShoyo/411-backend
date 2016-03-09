@@ -45,7 +45,7 @@ export default class LoginController extends Controller {
       })
       .then(() => {
         let newToken = uuid.v4();
-        return [connection.query('INSERT INTO user (username, password, token) VALUES (\'${username}\', \'${password}\', \'${newToken}\');'), newToken];
+        return [connection.query(`INSERT INTO user (username, password, token) VALUES ('${username}', '${password}', '${newToken}');`), newToken];
         //return [connection.query('INST'`UPDATE user SET token = '${newToken}' WHERE username = '${username}';`), newToken];
       })
       .then(([result, newToken]) => {
