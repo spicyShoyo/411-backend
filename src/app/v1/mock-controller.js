@@ -23,7 +23,7 @@ export default class MockController extends Controller {
     return next();
   }
 
-  @GET('')
+  @GET('/')
   mock2(req, res, next) {
     db.then(conn=> {
       conn.query('SHOW TABLES;').then(result=> {

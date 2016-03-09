@@ -19,6 +19,11 @@ server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 server.use(restify.requestLogger());
+server.use((req,res,next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  return next();
+});
 
 // Handles undefined body content and replaces it with an Object
 server.use((req, res, next) => {
