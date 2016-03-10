@@ -10,7 +10,7 @@ const db = require('./../database');
 const Errors = require('restify-errors');
 const uuid = require('node-uuid');
 
-export default class LoginController extends Controller {
+export default class registerController extends Controller {
 
   get prefix() { return 'register'; }
 
