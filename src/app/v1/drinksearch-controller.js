@@ -8,7 +8,6 @@ const UseMiddleware = require('./../use-middleware');
 const requireParams = require('./../middleware/require-params');
 const db = require('./../database');
 const Errors = require('restify-errors');
-const uuid = require('node-uuid');
 
 export default class drinksearchController extends Controller {
 
