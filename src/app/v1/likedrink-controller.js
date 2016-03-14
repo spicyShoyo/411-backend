@@ -9,30 +9,27 @@ const requireParams = require('./../middleware/require-params');
 const db = require('./../database');
 const Errors = require('restify-errors');
 
-export default class likeController extends Controller {
+export default class likeDrinkController extends Controller {
 
-  get prefix() { return 'like'; }
+  get prefix() { return 'likedrink'; }
 
   /**
-   * @api {get} /v1/like
-   * @apiName like
-   * @apiGroup like
+   * @api {get} /v1/likedrink
+   * @apiName likedrink
+   * @apiGroup likedrink
    *
    * @apiParam username, string
-   *            drinkname, string
-   * @apiSuccess {String} drinks row returned
+   * @apiSuccess {String} drinks drinks liked by the user
    *
    */
   @POST('')
-  like(req, res, next) {
-    let drinkname = req.body.drinkname;
+  likedrink(req, res, next) {
     let username = req.body.username;
     let connection;
     db.then(conn => {
         connection = conn;
-        return conn.query(`UPDATE drink SET likes=likes+1 WHERE drinkname='${drinkname}';`);
+        return conn.query(`SELECT drinkname FROM likedrink where username='${username}';`);
       }).then(rows=> {
-         connection.query(`INSERT INTO likedrink (username, drinkname) VALUES ('${username}', '${drinkname}')`);
         res.send({drinks:rows});
         return next();
       });
