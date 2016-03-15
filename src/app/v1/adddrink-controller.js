@@ -1,6 +1,3 @@
-/**
- * Created by @tourbillon on 3/8/16.
- */
 
 const Controller = require('./../controller');
 const { POST } = require('./../http-methods');
