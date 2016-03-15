@@ -33,7 +33,17 @@ export default class unLikeController extends Controller {
         return conn.query(`UPDATE drink SET likes=likes-1 WHERE drinkname='${drinkname}';`);
       }).then(rows=> {
          connection.query(`DELETE FROM likedrink WHERE username='${username}' AND drinkname='${drinkname}'`);
-        res.send({drinks:rows});
+      }).then(rows => {
+        let retStr=`Alright! You just unliked ${drinkname}!`;
+        res.send({
+          drinks: retStr
+        });
+        return next();
+  		}).catch(err=> {
+        let retStr=`You never have liked ${drinkname}!`;
+        res.send({
+          drinks: retStr
+        });
         return next();
       });
   }
