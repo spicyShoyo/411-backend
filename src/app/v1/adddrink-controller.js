@@ -26,16 +26,28 @@ export default class addDrinkController extends Controller {
     let category = req.body.category;
     let alcohol = "Alcoholic";
     let glass = req.body.glass;
+    let num = 99999;
     let likes = 0;
-    let ingredientname = req.body.ingredientname;
     let connection;
+    let url;
     db.then(conn => {
-        connection = conn;
-        let url = connection.query(`SELECT u FROM pic ORDER BY RANDOM() LIMIT 1`);
-        connection.query(`INSERT INTO ingredientof (drinkname, ingredientname) VALUES ('${drinkname}', '${ingredientname}')`);
-        connection.query(`INSERT INTO drink (drinkname, category, alcohol, glass, likes, url)
-                          VALUES ('${drinkname}', '${category}', '${alcohol}', '${glass}', '${likes}', '${url}')`);
-        return next();
+      connection = conn;
+      return connection.query(`SELECT u FROM zliu80_bacchanalia.pic ORDER BY rand() LIMIT 1`);
+    }).then(rows => {
+      url = rows[0]["u"];
+      connection.query(`INSERT INTO drink (drinkname, category, alcohol, glass, num, likes, url)
+                        VALUES ('${drinkname}', '${category}', '${alcohol}', '${glass}', '${num}', '${likes}', '${url}')`);
+      let retStr="Drink created!"
+      res.send({
+        drinks: retStr
       });
+      return next();
+      }).catch(err=> {
+      let retStr="Fail to create drink!";
+      res.send({
+        drinks: retStr
+      });
+      return next();
+    });
   }
 }
