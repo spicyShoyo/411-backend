@@ -46,7 +46,7 @@ export default class searchdrinkbyingredientController extends Controller {
 							return conn.query(
 								`SELECT DISTINCT drinkname FROM ingredientof WHERE ingredientname LIKE '%${ingredientnames[i]}%'
 								AND drinkname = ANY (SELECT drinkname FROM ingredientof WHERE ingredientname LIKE '%${ingredientnames[j]}%')
-								AND drinkname = ANY (SELECT drinkname FROM ingredientof WHERE ingredientname LIKE '%${ingredientnames[k]}%');`);
+								AND drinkname = ANY (SELECT drinkname FROM ingredientof WHERE ingredientname LIKE '%${ingredientnames[k]}%') LIMIT 8;`);
 							}).then(rows => drinknames.push(rows))
 							.catch(err => console.log(err))
 						)
