@@ -55,9 +55,23 @@ export default class searchdrinkbyingredientController extends Controller {
 			}
 
 			q.all(promiseArr).then(function(){
-				if (drinknames.length>0) {
+				let result = [];
+				drinknames.forEach(arr => {
+					let arrrr = [];
+					if (arr.length !== 1 || arr[0].drinkname !== 'undefined') {
+						arr.forEach(d => {
+							if (d.drinkname !== 'undefined')
+								arrrr.push(d);
+						})
+					}
+					if (arrrr.length !== 0)
+						result.push(arrrr);
+				})
+
+
+				if (result.length>0) {
 					res.send({
-						drinknames: drinknames
+						drinknames: result
 					});
 				}
 				else {
