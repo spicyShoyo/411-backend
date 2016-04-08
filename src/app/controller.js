@@ -26,6 +26,7 @@ class Controller {
             middlewares.push(original._middlewares[middlewareName]);
           }
           let newFun = function(req, res, next) {
+            //console.log(req.body.toString());
             b.mapSeries(middlewares, middleware => {
                 return new Promise((resolve, reject) => {
                   let ifError = err => {
@@ -54,7 +55,10 @@ class Controller {
               })
               */
               .then(() => original(req, res, next))
-              .catch(err => next(err));
+              .catch(err => {
+                console.log(err);
+                next(err);
+              });
           }.bind(this);
           copyProperties(original, newFun);
           this[funcName] = newFun;
