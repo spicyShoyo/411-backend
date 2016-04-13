@@ -32,7 +32,7 @@ export default class categorysearchController extends Controller {
     let connection;
     db.then(conn => {
         connection = conn;
-        return conn.query(`SELECT distinct category FROM drink WHERE category LIKE '%${categorysearch}%' LIMIT 5;`);
+        return conn.query(`SELECT distinct category FROM drink WHERE category LIKE "%${categorysearch}%" LIMIT 5;`);
       }).then(rows=> {
         res.send({drinks:rows});
         return next();

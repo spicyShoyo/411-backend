@@ -38,14 +38,15 @@ export default class registerController extends Controller {
     let connection;
     db.then(conn => {
         connection = conn;
-        return conn.query(`SELECT * FROM user WHERE username = '${username}';`);
+        return conn.query(`SELECT * FROM user WHERE username = "${username}";`);
       })
       .then(rows => {
         if (rows.length !== 0) return next(new Errors.ForbiddenError());
       })
       .then(() => {
         let newToken = uuid.v4();
-        return [connection.query(`INSERT INTO user (username, password, token) VALUES ('${username}', '${password}', '${newToken}');`), newToken];
+        return [connection.query(`INSERT INTO user (username, password, token) 
+                                  VALUES ("${username}", "${password}", "${newToken}");`), newToken];
         //return [connection.query('INST'`UPDATE user SET token = '${newToken}' WHERE username = '${username}';`), newToken];
       })
       .then(([result, newToken]) => {

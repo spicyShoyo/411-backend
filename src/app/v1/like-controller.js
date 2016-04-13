@@ -34,9 +34,9 @@ export default class likeController extends Controller {
 		let connection;
 		db.then(conn => {
 			connection = conn;
-			return conn.query(`UPDATE drink SET likes=likes+1 WHERE drinkname='${drinkname}';`);
+			return conn.query(`UPDATE drink SET likes=likes+1 WHERE drinkname = "${drinkname}";`);
 		}).then(rows => {
-			return connection.query(`INSERT INTO likedrink (username, drinkname) VALUES ('${username}', '${drinkname}')`);
+			return connection.query(`INSERT INTO likedrink (username, drinkname) VALUES ("${username}", "${drinkname}")`);
 		}).then(rows => {
       let retStr=`Awesome! You just liked ${drinkname}!`;
       res.send({

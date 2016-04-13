@@ -28,7 +28,8 @@ export default class likeDrinkController extends Controller {
     let connection;
     db.then(conn => {
         connection = conn;
-        return conn.query(`SELECT d.* FROM likedrink l, drink d WHERE l.username='${username}' AND l.drinkname=d.drinkname;`);
+        return conn.query(`SELECT d.* FROM likedrink l, drink d 
+                           WHERE l.username = "${username}" AND l.drinkname = d.drinkname;`);
       }).then(rows=> {
         res.send({drinks:rows});
         return next();

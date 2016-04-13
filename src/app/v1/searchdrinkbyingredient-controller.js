@@ -43,10 +43,11 @@ export default class searchdrinkbyingredientController extends Controller {
 				for (let k=j+1; k<ingredientnames.length; k++) {
 					promiseArr.push(
 						db.then(conn => {
-							return conn.query(
-								`SELECT DISTINCT drinkname FROM ingredientof WHERE ingredientname LIKE '%${ingredientnames[i]}%'
-								AND drinkname = ANY (SELECT drinkname FROM ingredientof WHERE ingredientname LIKE '%${ingredientnames[j]}%')
-								AND drinkname = ANY (SELECT drinkname FROM ingredientof WHERE ingredientname LIKE '%${ingredientnames[k]}%') LIMIT 8;`);
+							return conn.query(`SELECT DISTINCT drinkname FROM ingredientof 
+											   WHERE ingredientname LIKE "%${ingredientnames[i]}%" AND drinkname = ANY 
+											   (SELECT drinkname FROM ingredientof WHERE ingredientname LIKE "%${ingredientnames[j]}%")
+											   AND drinkname = ANY 
+											   (SELECT drinkname FROM ingredientof WHERE ingredientname LIKE "%${ingredientnames[k]}%") LIMIT 8;`);
 							}).then(rows => drinknames.push(rows))
 							.catch(err => console.log(err))
 						)

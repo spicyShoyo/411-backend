@@ -35,7 +35,8 @@ export default class ingredientearchController extends Controller {
     let connection;
     db.then(conn => {
         connection = conn;
-        return conn.query(`SELECT DISTINCT ingredientname FROM ingredientof WHERE ingredientname LIKE '%${ingredienttyped}%' LIMIT 5;`);
+        return conn.query(`SELECT DISTINCT ingredientname FROM ingredientof 
+                           WHERE ingredientname LIKE "%${ingredienttyped}%" LIMIT 5;`);
       }).then(rows=> {
         res.send({ingredients:rows});
         return next();

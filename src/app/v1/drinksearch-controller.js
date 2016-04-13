@@ -42,7 +42,7 @@ export default class drinksearchController extends Controller {
 		if (searchby == 'drinkname') {
 			db.then(conn => {
 				connection = conn;
-				return conn.query(`SELECT * FROM drink WHERE drinkname LIKE '%${param}%' LIMIT 8;`);
+				return conn.query(`SELECT * FROM drink WHERE drinkname LIKE "%${param}%" LIMIT 8;`);
 			}).then(rows => {
 				for (let i = 0; i < 8; ++i) {
 					if (i < rows.length) {

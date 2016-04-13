@@ -36,7 +36,7 @@ export default class addDrinkController extends Controller {
     }).then(rows => {
       url = rows[0]["u"];
       connection.query(`INSERT INTO drink (drinkname, category, alcohol, glass, num, likes, url)
-                        VALUES ('${drinkname}', '${category}', '${alcohol}', '${glass}', '${num}', '${likes}', '${url}')`);
+                        VALUES ("${drinkname}", "${category}", "${alcohol}", "${glass}", "${num}", "${likes}", "${url}")`);
       let retStr="Drink created!"
       res.send({
         drinks: retStr

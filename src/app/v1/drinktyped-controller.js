@@ -36,7 +36,7 @@ export default class drinktypedController extends Controller {
     let connection;
     db.then(conn => {
         connection = conn;
-        return conn.query(`SELECT drinkname FROM drink WHERE drinkname LIKE '${drinktyped}%' LIMIT 5;`);
+        return conn.query(`SELECT drinkname FROM drink WHERE drinkname LIKE "${drinktyped}%" LIMIT 5;`);
       }).then(rows=> {
         res.send({drinks:rows});
         return next();

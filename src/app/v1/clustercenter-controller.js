@@ -37,7 +37,7 @@ export default class clustercenterController extends Controller {
       return conn.query(`SELECT * FROM drink WHERE drinkname IN
                          (SELECT DISTINCT clustercenter FROM clustering
                          WHERE clustercenter <> ALL
-                         (SELECT DISTINCT drinkname FROM likedrink WHERE username='${username}')
+                         (SELECT DISTINCT drinkname FROM likedrink WHERE username = "${username}")
                          ORDER BY RAND()) LIMIT 16;`);
         }).then(rows => {
           if (rows.length !== 16)

@@ -34,7 +34,8 @@ export default class addingredientController extends Controller {
 		let connection;
 		db.then(conn => {
 			connection = conn;
-			return connection.query(`INSERT INTO ingredientof (drinkname, ingredientname) VALUES ('${drinkname}', '${ingredientname}')`);
+			return connection.query(`INSERT INTO ingredientof (drinkname, ingredientname) 
+									 VALUES ("${drinkname}", "${ingredientname}")`);
 		}).then(rows => {
 			let retStr=`Awesome! Drink created successfully!`;
 			res.send({

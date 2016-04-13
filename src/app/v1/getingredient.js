@@ -36,7 +36,7 @@ export default class getIngredientController extends Controller {
     let connection;
     db.then(conn => {
         connection = conn;
-        return conn.query(`SELECT * FROM ingredientof WHERE drinkname='${drinktyped}';`);
+        return conn.query(`SELECT * FROM ingredientof WHERE drinkname = "${drinktyped}";`);
       }).then(rows=> {
         res.send({ingredients:rows});
         return next();
