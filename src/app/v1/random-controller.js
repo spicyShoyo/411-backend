@@ -30,24 +30,18 @@ export default class randomController extends Controller {
      */
     @GET('')
     drinktyped(req, res, next) {
-        let drinktyped = req.body.drinktyped;
         let connection;
         db.then(conn => {
             connection = conn;
-            return conn.query(`SELECT * FROM drink ORDER BY likes DESC LIMIT 16;`);
+            return conn.query(`SELECT url FROM drink ORDER BY RAND() LIMIT 1;`);
         }).then(rows => {
-            for (let i = 0; i < 16; ++i) {
-                rows[i]["featured"]=false;
-            }
             rows[0]["featured"]=true;
-            rows[3]["featured"]=true;
-            rows[8]["featured"]=true;
-            rows[11]["featured"]=true;
-
             res.send({
-                drinks: rows
+                url: rows
             });
-            return next();
+        }).catch(err => {
+            req.log.error(err);
+            return next(new Errors.InternalServerError());
         });
     }
 }
