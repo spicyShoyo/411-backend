@@ -48,7 +48,7 @@ export default class createdrinkController extends Controller {
 		}).then(rows => {
 			let drinkname0 = rows[0]["drinkname"];
 			let drinkname1 = rows[1]["drinkname"];
-			return connection.query(`SELECT DISTINCT ingredientname FROM ingredientof 
+			return connection.query(`SELECT ingredientname, amount, unit FROM ingredientof 
 									 WHERE drinkname = "${drinkname0}" OR drinkname = "${drinkname0}";`);
 		}).then(rows => {
 			res.send({
