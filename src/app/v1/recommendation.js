@@ -42,7 +42,7 @@ export default class recommendationController extends Controller {
 		let connection;
 		db.then(conn => {
 			connection = conn;
-			return conn.query(`SELECT DISTINCT c.drinkname, d.url FROM clustering c, drink d WHERE c.clustercenter IN
+			return conn.query(`SELECT DISTINCT d.* FROM clustering c, drink d WHERE c.clustercenter IN
 							   (SELECT clustercenter FROM clustering WHERE drinkname = "${drinkname}") 
 							   AND c.drinkname <> "${drinkname}" AND c.drinkname NOT IN
 							   (SELECT DISTINCT drinkname FROM likedrink WHERE username = "${username}")
@@ -54,21 +54,17 @@ export default class recommendationController extends Controller {
 					conn => connection.query(`SELECT COUNT(*) FROM ingredientof 
 											  WHERE drinkname = "${sub_query_drinkname}" AND ingredientname IN
 											  (SELECT ingredientname FROM ingredientof WHERE drinkname = "${drinkname}");`))
-					.then(row => [arr["drinkname"], row[0]["COUNT(*)"], arr["url"]]);
+					.then(row => [arr, row[0]["COUNT(*)"]]);
 			}));
         }).then(result => {
         	result.sort(function(a, b){
         		return b[1]-a[1];
         	})
         	result = result.slice(0, 16).map(arr => {
-        		return [arr[0], arr[2]]
+        		return arr[0]
         	});
         	for (let i = 0; i < 16; ++i)
         		result[i]["featured"]=false;
-        	result[0]["featured"]=true;
-        	result[3]["featured"]=true;
-        	result[8]["featured"]=true;
-        	result[11]["featured"]=true;
         	res.send({
         		drinks: result
         	});
